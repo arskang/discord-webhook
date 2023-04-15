@@ -31,17 +31,17 @@ test('My Discord HookBuilder', async () => {
 
   console.log(message.getJson());
 
-  try {
-    const hook = new HookBuilder("DISCORD_WEBHOOK_URL");
+  // try {
+  //   const hook = new HookBuilder("DISCORD_WEBHOOK_URL");
 
-    const allResponse = await hook
-      .addMessage(message.build())
-      .send();
+  //   const allResponse = await hook
+  //     .addMessage(message.build())
+  //     .send();
 
-    allResponse.forEach(({ data }) => console.log(data));
-  } catch({ message }) {
-    console.error(message);
-  }
+  //   allResponse.forEach(({ data }) => console.log(data));
+  // } catch({ message }) {
+  //   console.error(message);
+  // }
 
   expect(1).toBe(1);
 });
