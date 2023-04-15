@@ -28,7 +28,7 @@ test('My Discord HookBuilder', async () => {
 
   console.log(message.getJson());
 
-  await new HookBuilder("https://discord.com/api/webhooks/1095780891214753803/nM2HFL6ovzyuNaiRxRaNDNdARUidX2DXiA7W-9vNuZBa3vDJ3mqDS7gNINm4nZgwVjan", message.build())
+  await new HookBuilder("DISCORD_WEBHOOK_URL", message.build())
     .send()
     .then(r => {
       console.log(r.data);

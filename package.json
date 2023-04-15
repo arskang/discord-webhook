@@ -33,8 +33,13 @@
       "eslint --fix"
     ]
   },
-  "keywords": [],
+  "keywords": ["discord-webhook", "discord"],
   "author": "@arskang",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arskang/discord-webhook"
+  },
+  "homepage": "https://github.com/arskang/discord-webhook",
   "license": "ISC",
   "devDependencies": {
     "@types/axios": "^0.14.0",
