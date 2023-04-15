@@ -143,7 +143,7 @@ const { MessageBuilder } = require("@arskang/discord-webhook");
 
 const message = new MessageBuilder()
   .setContent("Content @everyone")
-  .setAllowedMentionsParse([Parse.everyone])
+  .setAllowedMentionsParse(["everyone"])
   .addEmbed(embed.build());
 
 // Get json string
