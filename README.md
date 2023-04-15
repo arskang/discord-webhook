@@ -3,10 +3,6 @@
 #### Structure
 - [Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
-#### Unsupported
-- tss
-- allowed_mentions
-
 #### Install
 ```
 yarn add @arskang/discord-webhook
@@ -17,7 +13,9 @@ yarn add @arskang/discord-webhook
 - DiscordMessage
   - content?: string // Max 2000
   - embeds?: Embed[] // Max 10
-  - attachments?: string[] // Max 10 
+  - attachments?: string[] // Max 10
+  - tts?: TTS
+  - allowed_mentions?: AllowedMentions
 - Embed
   - title?: string // Max 256
   - description?: string // Max 4096
@@ -42,6 +40,14 @@ yarn add @arskang/discord-webhook
   - timestamp?: string // ISO string
 - Image
   - url: string
+- TTS
+  - content: string
+  - tts: boolean
+- AllowedMentions
+  - parse?: Parse[] // everyone, users o roles
+  - users?: string[]
+  - roles?: string[]
+- Parse (enum): everyone, users o roles
 
 #### EmbedBuilder
 
@@ -123,6 +129,10 @@ console.log(embed.getJson());
 - setContent(content: string = ''): return this
 - addAttachment(attachment?: string): return this
 - addEmbed(embed?: Embed): return this
+- setTTS(content?: string): return this
+- setAllowedMentionsParse(parse?: Parse[]): return this
+- setAllowedMentionsUsers(users?: string[]): return this
+- setAllowedMentionsRoles(roles?: string[]): return this
 - getJson(): return json string
 - build(): return **DiscordMessage**
 
@@ -132,13 +142,15 @@ console.log(embed.getJson());
 const { MessageBuilder } = require("@arskang/discord-webhook");
 
 const message = new MessageBuilder()
-  .setContent("Content")
+  .setContent("Content @everyone")
+  .setAllowedMentionsParse([Parse.everyone])
   .addEmbed(embed.build());
 
 // Get json string
 console.log(message.getJson());
 // {
-//   "content": "Content",
+//   "content": "Content @everyone",
+//   "allowed_mentions": { "parse": ["everyone"] },
 //   "embeds": [
 //     {
 //       "title": "Buddy Daddies (English Dub) - Episode 12 - Daughter Daddies",
@@ -191,7 +203,6 @@ try {
   const hook = new HookBuilder("DISCORD_WEBHOOK_URL");
 
   const allResponse = await hook
-    .addMessage(message.build())
     .addMessage(message.build())
     .send();
 

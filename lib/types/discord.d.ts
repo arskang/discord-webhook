@@ -2,6 +2,8 @@ export interface DiscordMessage {
     content?: string;
     embeds?: Embed[];
     attachments?: string[];
+    tts?: TTS;
+    allowed_mentions?: AllowedMentions;
 }
 export interface Embed {
     title?: string;
@@ -32,4 +34,18 @@ export interface Footer {
 }
 export interface Image {
     url: string;
+}
+export interface TTS {
+    content: string;
+    tts: boolean;
+}
+export declare enum Parse {
+    everyone = "everyone",
+    users = "users",
+    roles = "roles"
+}
+export interface AllowedMentions {
+    parse?: Parse[];
+    users?: string[];
+    roles?: string[];
 }

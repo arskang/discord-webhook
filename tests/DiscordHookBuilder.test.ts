@@ -2,6 +2,7 @@ import {
   HookBuilder,
   MessageBuilder,
   EmbedBuilder,
+  Parse,
 } from '../src/index';
 
 test('My Discord HookBuilder', async () => {
@@ -26,7 +27,8 @@ test('My Discord HookBuilder', async () => {
   console.log(embed.getJson());
 
   const message = new MessageBuilder()
-    .setContent("Content")
+    .setContent("Content @everyone")
+    .setAllowedMentionsParse([Parse.everyone])
     .addEmbed(embed.build());
 
   console.log(message.getJson());

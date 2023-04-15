@@ -1,4 +1,4 @@
-import { DiscordMessage, Embed } from '../types/discord';
+import { DiscordMessage, Embed, Parse } from '../types/discord';
 import { rgxURL } from '../helpers/regexp';
 import e from '../helpers/errors';
 
@@ -25,6 +25,42 @@ export default class MessageBuilder {
     if (!this.message.embeds) this.message.embeds = [];
     if (this.message.embeds.length === 10) throw new Error(`embeds ${e.limit10}`);
     this.message.embeds.push(embed);
+    return this;
+  }
+
+  setTTS(content?: string) {
+    if (!content) return this;
+    this.message.tts = { content, tts: true };
+    return this;
+  }
+
+  setAllowedMentionsParse(parse?: Parse[]) {
+    if (!parse) return this;
+    if (!this.message.allowed_mentions) this.message.allowed_mentions = {};
+    this.message.allowed_mentions = {
+      ...this.message.allowed_mentions,
+      parse,
+    };
+    return this;
+  }
+
+  setAllowedMentionsUsers(users?: string[]) {
+    if (!users) return this;
+    if (!this.message.allowed_mentions) this.message.allowed_mentions = {};
+    this.message.allowed_mentions = {
+      ...this.message.allowed_mentions,
+      users,
+    };
+    return this;
+  }
+
+  setAllowedMentionsRoles(roles?: string[]) {
+    if (!roles) return this;
+    if (!this.message.allowed_mentions) this.message.allowed_mentions = {};
+    this.message.allowed_mentions = {
+      ...this.message.allowed_mentions,
+      roles,
+    };
     return this;
   }
 

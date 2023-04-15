@@ -4,6 +4,8 @@ export interface DiscordMessage {
   content?: string; // Max 2000
   embeds?: Embed[]; // Max 10
   attachments?: string[]; // Max 10
+  tts?: TTS;
+  allowed_mentions?: AllowedMentions;
 }
 
 export interface Embed {
@@ -39,4 +41,21 @@ export interface Footer {
 
 export interface Image {
   url: string;
+}
+
+export interface TTS {
+  content: string;
+  tts: boolean;
+}
+
+export enum Parse {
+  everyone = 'everyone',
+  users = 'users',
+  roles = 'roles',
+}
+
+export interface AllowedMentions {
+  parse?: Parse[];
+  users?: string[];
+  roles?: string[];
 }
