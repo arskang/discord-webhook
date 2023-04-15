@@ -6,16 +6,22 @@ import errors from '../helpers/errors';
 export default class HookBuilder {
   private webhookURL: string;
 
-  private discordMessage: DiscordMessage;
+  private discordMessages: DiscordMessage[] = [];
 
-  constructor(url: string, message: DiscordMessage) {
+  constructor(url: string) {
     if (!rgxURL.test(url)) throw new Error(`${url} ${errors.urlError}`);
-    if (!message) throw new Error(errors.discordMessageError);
     this.webhookURL = url;
-    this.discordMessage = message;
+  }
+
+  addMessage(message: DiscordMessage) {
+    if (!message) throw new Error(errors.discordMessageError);
+    this.discordMessages.push(message);
+    return this;
   }
 
   send() {
-    return axios.post(this.webhookURL, this.discordMessage);
+    return Promise.all(this.discordMessages.map((message) => (
+      axios.post(this.webhookURL, message)
+    )));
   }
 }

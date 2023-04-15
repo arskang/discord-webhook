@@ -67,6 +67,8 @@ const { EmbedBuilder } = require("@arskang/discord-webhook");
 const embed = new EmbedBuilder()
   .setTitle("Buddy Daddies (English Dub) - Episode 12 - Daughter Daddies")
   .setColor("#fea800") // Hexadecimal
+  .setImage("https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg")
+  .setThumbnail("https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg")
   .setUrl("http://www.crunchyroll.com/buddy-daddies/episode-12-daughter-daddies-896284")
   .setAuthor({
     name: "Mr. Cat",
@@ -82,6 +84,36 @@ const embed = new EmbedBuilder()
 
 // Get json string
 console.log(embed.getJson());
+// {
+//   "title": "Buddy Daddies (English Dub) - Episode 12 - Daughter Daddies",
+//   "color": 16689152,
+//   "image": {
+//     "url": "https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg"
+//   },
+//   "thumbnail": {
+//     "url": "https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg"
+//   },
+//   "url": "http://www.crunchyroll.com/buddy-daddies/episode-12-daughter-daddies-896284",
+//   "author": {
+//     "name": "Mr. Cat",
+//     "url": "https://www.reddit.com/r/cats/",
+//     "icon_url": "https://i.imgur.com/R66g1Pe.jpg"
+//   },
+//   "footer": {
+//     "text": "Footer"
+//   },
+//   "timestamp": "2023-04-14T21:30:00.000Z",
+//   "fields": [
+//     {
+//       "name": "Field 1",
+//       "value": "ok"
+//     },
+//     {
+//       "name": "Field 2",
+//       "value": "ok"
+//     }
+//   ]
+// }
 ```
 
 #### MessageBuilder
@@ -105,6 +137,41 @@ const message = new MessageBuilder()
 
 // Get json string
 console.log(message.getJson());
+// {
+//   "content": "Content",
+//   "embeds": [
+//     {
+//       "title": "Buddy Daddies (English Dub) - Episode 12 - Daughter Daddies",
+//       "color": 16689152,
+//       "image": {
+//         "url": "https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg"
+//       },
+//       "thumbnail": {
+//         "url": "https://img1.ak.crunchyroll.com/i/spire3-tmb/34be63a102d3e6947dfbcc477d99074f1681503912_thumb.jpg"
+//       },
+//       "url": "http://www.crunchyroll.com/buddy-daddies/episode-12-daughter-daddies-896284",
+//       "author": {
+//         "name": "Mr. Cat",
+//         "url": "https://www.reddit.com/r/cats/",
+//         "icon_url": "https://i.imgur.com/R66g1Pe.jpg"
+//       },
+//       "footer": {
+//         "text": "Footer"
+//       },
+//       "timestamp": "2023-04-14T21:30:00.000Z",
+//       "fields": [
+//         {
+//           "name": "Field 1",
+//           "value": "ok"
+//         },
+//         {
+//           "name": "Field 2",
+//           "value": "ok"
+//         }
+//       ]
+//     },
+//   ]
+// }
 ```
 
 #### HookBuilder
@@ -112,13 +179,28 @@ console.log(message.getJson());
 ##### Methods:
 
 - constructor(url: string, message: DiscordMessage): return this
-- send(): return **axios response promise**
+- send(): return **axios (array) response promise**
 
 ##### Example:
 
 ```js
 const { HookBuilder } = require("@arskang/discord-webhook");
 
-// return axios promise
-new HookBuilder("DISCORD_WEBHOOK_URL", message.build()).send();
+// axios (array) response promise
+try {
+  const hook = new HookBuilder("DISCORD_WEBHOOK_URL");
+
+  const allResponse = await hook
+    .addMessage(message.build())
+    .addMessage(message.build())
+    .send();
+
+  allResponse.forEach(({ data }) => console.log(data));
+} catch({ message }) {
+  console.error(message);
+}
 ```
+
+##### Output:
+
+![Output](./assets/output.png)

@@ -1,7 +1,8 @@
 import { DiscordMessage } from '../types/discord';
 export default class HookBuilder {
     private webhookURL;
-    private discordMessage;
-    constructor(url: string, message: DiscordMessage);
-    send(): Promise<import("axios").AxiosResponse<any, any>>;
+    private discordMessages;
+    constructor(url: string);
+    addMessage(message: DiscordMessage): this;
+    send(): Promise<import("axios").AxiosResponse<any, any>[]>;
 }

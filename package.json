@@ -1,6 +1,6 @@
 {
   "name": "@arskang/discord-webhook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Librería para utilizar los webhook en Discord",
   "main": "lib/index.js",
   "types": "lib/index.d.js",
