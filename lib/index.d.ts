@@ -1,8 +1,4 @@
-import { DiscordMessage } from './types/discord';
-export default class DiscordWebhookBuilder {
-    webhookURL: string;
-    discordMessage?: DiscordMessage;
-    constructor(url: string);
-    createNewMessage(content: DiscordMessage): string;
-    sendMessages(): Promise<import("axios").AxiosResponse<any, any>>;
-}
+import HookBuilder from './services/HookBuilder';
+import MessageBuilder from './services/MessageBuilder';
+import EmbedBuilder from './services/EmbedBuilder';
+export { HookBuilder, MessageBuilder, EmbedBuilder, };
