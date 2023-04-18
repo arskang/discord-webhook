@@ -1,4 +1,4 @@
-import { DiscordMessage, Embed, Parse } from '../types/discord';
+import { DiscordMessage, Embed, Parse } from '../types';
 import { rgxURL } from '../helpers/regexp';
 import e from '../helpers/errors';
 

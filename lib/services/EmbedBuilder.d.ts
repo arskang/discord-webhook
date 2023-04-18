@@ -1,4 +1,4 @@
-import { Embed, Author, Field, Footer } from '../types/discord';
+import { Embed, Author, Field, Footer } from '../types';
 export default class EmbedBuilder {
     private embed;
     setTitle(title?: string): this;

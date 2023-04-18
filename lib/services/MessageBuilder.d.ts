@@ -1,4 +1,4 @@
-import { DiscordMessage, Embed, Parse } from '../types/discord';
+import { DiscordMessage, Embed, Parse } from '../types';
 export default class MessageBuilder {
     private message;
     setContent(content?: string): this;

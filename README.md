@@ -4,8 +4,12 @@
 - [Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
 #### Install
-```
+```bash
 yarn add @arskang/discord-webhook
+
+o
+
+npm install @arskang/discord-webhook
 ```
 
 #### Types
@@ -190,11 +194,13 @@ console.log(message.getJson());
 
 ##### Methods:
 
-- constructor(url: string, message: DiscordMessage): return this
+- constructor(url: string): return this
+- addMessage(message: DiscordMessage): return this
 - send(): return **axios (array) response promise**
 
 ##### Example:
 
+- Javascript
 ```js
 const { HookBuilder } = require("@arskang/discord-webhook");
 
@@ -215,3 +221,122 @@ try {
 ##### Output:
 
 ![Output](./assets/output.png)
+
+#### MarkdownBuilder
+
+- bold(text: string): return this
+  - (static) bold(text: string): string
+- italic(text: string): return this
+  - (static) italic(text: string): string
+- underline(text: string): return this
+  - (static) underline(text: string): string
+- strikethrough(text: string): return this
+  - (static) strikethrough(text: string): string
+- bigHeader(text: string): return this
+  - (static) bigHeader(text: string): string
+- smallerHeader(text: string): return this
+  - (static) smallerHeader(text: string): string
+- evenSmallerHeader(text: string)return this
+  - (static) evenSmallerHeader(text: string)
+- links(name: string, url: string)return this
+  - (static) links(name: string, url: string)
+- list(list: MarkdownList = []): return this
+  - (static) list(list: MarkdownList = []): string
+- codeBlocks(text: string, language?return this
+  - (static) codeBlocks(text: string, language?
+- inlineBlockQuote(text: string): return this
+  - (static) inlineBlockQuote(text: string): string
+- blockQuotes(text: string): return this
+  - (static) blockQuotes(text: string): string
+- spoiler(text: string): return this
+  - (static) spoiler(text: string): string
+- lineBreak(): return this
+- getMessage(): return string message
+
+##### Example:
+
+- Javascript
+```js
+  const { MarkdownBuilder } = require("@arskang/discord-webhook");
+
+  // Static
+  // => **Bold**
+  MarkdownBuilder.bold("Bold")
+  // => *Italic*
+  MarkdownBuilder.italic("Italic")
+  // => __Underline__
+  MarkdownBuilder.underline("Underline")
+  // => ~~Strike Thorugh~~
+  MarkdownBuilder.strikethrough("Strike Thorugh")
+  // => # Big Header
+  MarkdownBuilder.bigHeader("Big Header")
+  // => ## Smaller Header
+  MarkdownBuilder.smallerHeader("Smaller Header")
+  // => ### Even Smaller Header
+  MarkdownBuilder.evenSmallerHeader("Even Smaller Header")
+
+  // Builder
+  const messageMarkdown = new MarkdownBuilder()
+    .bigHeader("Big Header")
+    .smallerHeader("Smaller Header")
+    .evenSmallerHeader("Even Smaller Header")
+    .inlineBlockQuote("BlockQuote 1")
+    .inlineBlockQuote("BlockQuote 2")
+    .inlineBlockQuote("BlockQuote 3")
+    .links("google", "https://www.google.com")
+    .codeBlocks(`
+const { MarkdownBuilder } = require("@arskang/discord-webhook");
+// Static
+const bold = MarkdownBuilder.bold("Text") // => **Text**
+
+// Builder
+const message = new MarkdownBuilder()
+  .bigHeader("Header")
+  .getMessage();`, 'js')
+    .lineBreak()
+    .spoiler('spoiler')
+    .lineBreak()
+    .list([
+      "List 1",
+      {
+        name: "List 2",
+        items: ["Item 1", "Item 2"],
+      },
+      "List 3"
+    ])
+    .getMessage();
+
+  console.log(message)
+  // # Big Header
+  // ## Smaller Header
+  // ### Even Smaller Header
+  // > BlockQuote 1
+  // > BlockQuote 2
+  // > BlockQuote 3
+  // [google](https://www.google.com)
+  // ```js
+
+  // const { MarkdownBuilder } = require("@arskang/discord-webhook");
+  // // Static
+  // const bold = MarkdownBuilder.bold("Text") // => **Text**
+
+  // // Builder
+  // const message = new MarkdownBuilder()
+  //   .bigHeader("Header")
+  //   .getMessage();
+  // ```
+
+
+  // ||spoiler||
+
+
+  // - List 1
+  // - List 2
+  //   - Item 1
+  //   - Item 2
+  // - List 3
+```
+
+##### Output:
+
+![Output](./assets/markdown.png)

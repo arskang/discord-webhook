@@ -1,5 +1,6 @@
 import {
   HookBuilder,
+  MarkdownBuilder,
   MessageBuilder,
   EmbedBuilder,
   Parse,
@@ -32,6 +33,55 @@ test('My Discord HookBuilder', async () => {
     .addEmbed(embed.build());
 
   console.log(message.getJson());
+
+  // Static
+  // => **Bold**
+  MarkdownBuilder.bold("Bold")
+  // => *Italic*
+  MarkdownBuilder.italic("Italic")
+  // => __Underline__
+  MarkdownBuilder.underline("Underline")
+  // => ~~Strike Thorugh~~
+  MarkdownBuilder.strikethrough("Strike Thorugh")
+  // => # Big Header
+  MarkdownBuilder.bigHeader("Big Header")
+  // => ## Smaller Header
+  MarkdownBuilder.smallerHeader("Smaller Header")
+  // => ### Even Smaller Header
+  MarkdownBuilder.evenSmallerHeader("Even Smaller Header")
+
+  // Builder
+  const messageMarkdown = new MarkdownBuilder()
+    .bigHeader("Big Header")
+    .smallerHeader("Smaller Header")
+    .evenSmallerHeader("Even Smaller Header")
+    .inlineBlockQuote("BlockQuote 1")
+    .inlineBlockQuote("BlockQuote 2")
+    .inlineBlockQuote("BlockQuote 3")
+    .links("google", "https://www.google.com")
+    .codeBlocks(`
+const { MarkdownBuilder } = require("@arskang/discord-webhook");
+// Static
+const bold = MarkdownBuilder.bold("Text") // => **Text**
+
+// Builder
+const message = new MarkdownBuilder()
+  .bigHeader("Header")
+  .getMessage();`, 'js')
+    .lineBreak()
+    .spoiler('spoiler')
+    .lineBreak()
+    .list([
+      "List 1",
+      {
+        name: "List 2",
+        items: ["Item 1", "Item 2"],
+      },
+      "List 3"
+    ])
+    .getMessage();
+
+  console.log(messageMarkdown)
 
   // try {
   //   const hook = new HookBuilder("DISCORD_WEBHOOK_URL");

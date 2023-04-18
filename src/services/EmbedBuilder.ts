@@ -2,7 +2,7 @@ import { getDiscordColor } from '../helpers';
 import { rgxISODateString, rgxURL } from '../helpers/regexp';
 import {
   Embed, Author, Field, Footer,
-} from '../types/discord';
+} from '../types';
 import e from '../helpers/errors';
 
 export default class EmbedBuilder {

@@ -59,3 +59,8 @@ export interface AllowedMentions {
   users?: string[];
   roles?: string[];
 }
+
+export interface MdList {
+  name: string;
+  items?: string[];
+}

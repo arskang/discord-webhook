@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { rgxURL } from '../helpers/regexp';
-import { DiscordMessage } from '../types/discord';
+import { DiscordMessage } from '../types';
 import errors from '../helpers/errors';
 
 export default class HookBuilder {

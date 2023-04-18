@@ -1,4 +1,4 @@
-import { DiscordMessage } from '../types/discord';
+import { DiscordMessage } from '../types';
 export default class HookBuilder {
     private webhookURL;
     private discordMessages;

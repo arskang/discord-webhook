@@ -1,0 +1,30 @@
+import { MarkdownList } from '../types';
+export default class MarkdownDiscordBuilder {
+    private message;
+    getMessage(): string;
+    lineBreak(): this;
+    bold(text: string): this;
+    static bold(text: string): string;
+    italic(text: string): this;
+    static italic(text: string): string;
+    underline(text: string): this;
+    static underline(text: string): string;
+    strikethrough(text: string): this;
+    static strikethrough(text: string): string;
+    bigHeader(text: string): this;
+    static bigHeader(text: string): string;
+    smallerHeader(text: string): this;
+    static smallerHeader(text: string): string;
+    evenSmallerHeader(text: string): this;
+    static evenSmallerHeader(text: string): string;
+    links(name: string, url: string): this;
+    static links(name: string, url: string): string;
+    list(list?: MarkdownList): this;
+    static list(list?: MarkdownList): string;
+    codeBlocks(text: string, language?: string): this;
+    static codeBlocks(text: string, language?: string): string;
+    blockQuotes(text: string): this;
+    static blockQuotes(text: string): string;
+    spoiler(text: string): this;
+    static spoiler(text: string): string;
+}
