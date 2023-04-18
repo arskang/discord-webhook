@@ -1,2 +1,3 @@
+import { MdList } from '../types';
 export declare function getDiscordColor(hexColor: string): number;
-export default undefined;
+export declare function convertToList(item: string | MdList): MdList;

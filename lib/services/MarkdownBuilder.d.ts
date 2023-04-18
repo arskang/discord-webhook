@@ -1,4 +1,4 @@
-import { MarkdownList } from '../types';
+import { MdList } from '../types';
 export default class MarkdownDiscordBuilder {
     private message;
     getMessage(): string;
@@ -19,10 +19,12 @@ export default class MarkdownDiscordBuilder {
     static evenSmallerHeader(text: string): string;
     links(name: string, url: string): this;
     static links(name: string, url: string): string;
-    list(list?: MarkdownList): this;
-    static list(list?: MarkdownList): string;
+    list(list?: (string | MdList)[]): this;
+    static list(list?: (string | MdList)[]): string;
     codeBlocks(text: string, language?: string): this;
     static codeBlocks(text: string, language?: string): string;
+    inlineBlockQuote(text: string): this;
+    static inlineBlockQuote(text: string): string;
     blockQuotes(text: string): this;
     static blockQuotes(text: string): string;
     spoiler(text: string): this;
