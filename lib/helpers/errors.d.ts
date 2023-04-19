@@ -5,6 +5,7 @@ declare const _default: {
     timestampError: string;
     limit10: string;
     limit25: string;
+    limit80: string;
     limit256: string;
     limit1024: string;
     limit2000: string;

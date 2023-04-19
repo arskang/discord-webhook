@@ -1,5 +1,5 @@
 import { MdList } from '../types';
-export default class MarkdownDiscordBuilder {
+export default class MarkdownBuilder {
     private message;
     getMessage(): string;
     lineBreak(): this;
@@ -29,4 +29,8 @@ export default class MarkdownDiscordBuilder {
     static blockQuotes(text: string): string;
     spoiler(text: string): this;
     static spoiler(text: string): string;
+    channelTag(id: string): this;
+    static channelTag(id: string): string;
+    uroleTag(id: string): this;
+    static uroleTag(id: string): string;
 }

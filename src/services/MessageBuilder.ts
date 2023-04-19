@@ -1,9 +1,19 @@
-import { DiscordMessage, Embed, Parse } from '../types';
+import {
+  DiscordMessage, Embed, Parse, WebhookSettings, DiscordFile,
+} from '../types';
 import { rgxURL } from '../helpers/regexp';
 import e from '../helpers/errors';
 
 export default class MessageBuilder {
   private message: DiscordMessage = {};
+
+  overrideWebhook(settings: WebhookSettings = {}) {
+    if (settings.username && settings.username.trim().length > 80) throw new Error(`username ${e.limit80}`);
+    if (settings.avatar_url && !rgxURL.test(settings.avatar_url)) throw new Error(`avatar_url ${e.urlError}`);
+    if (settings.username) this.message.username = settings.username;
+    if (settings.avatar_url) this.message.avatar_url = settings.avatar_url;
+    return this;
+  }
 
   setContent(content: string = '') {
     if (content.length > 2000) throw new Error(`content ${e.limit2000}`);
@@ -11,9 +21,8 @@ export default class MessageBuilder {
     return this;
   }
 
-  addAttachment(attachment?: string) {
+  addAttachment(attachment?: DiscordFile) {
     if (!attachment) return this;
-    if (!rgxURL.test(attachment)) throw new Error(e.urlError);
     if (!this.message.attachments) this.message.attachments = [];
     if (this.message.attachments.length === 10) throw new Error(`attachments ${e.limit10}`);
     this.message.attachments.push(attachment);

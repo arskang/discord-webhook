@@ -2,6 +2,7 @@ import axios from 'axios';
 import { rgxURL } from '../helpers/regexp';
 import { DiscordMessage } from '../types';
 import errors from '../helpers/errors';
+import { getFormData } from '../helpers';
 
 export default class HookBuilder {
   private webhookURL: string;
@@ -20,8 +21,12 @@ export default class HookBuilder {
   }
 
   send() {
-    return Promise.all(this.discordMessages.map((message) => (
-      axios.post(this.webhookURL, message)
-    )));
+    return Promise.all(this.discordMessages.map((message) => {
+      if (message.attachments && message.attachments.length > 0) {
+        const formdata = getFormData(message);
+        return axios.post(this.webhookURL, formdata);
+      }
+      return axios.post(this.webhookURL, message);
+    }));
   }
 }

@@ -1,73 +1,81 @@
 # Discord Webhook
 
+Library to use Discord webhooks
+
 #### Structure
-- [Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+- **[**Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
 #### Install
 ```bash
 yarn add @arskang/discord-webhook
-
-o
 
 npm install @arskang/discord-webhook
 ```
 
 #### Types
 
-- DiscordMessage
-  - content?: string // Max 2000
-  - embeds?: Embed[] // Max 10
-  - attachments?: string[] // Max 10
-  - tts?: TTS
-  - allowed_mentions?: AllowedMentions
-- Embed
-  - title?: string // Max 256
-  - description?: string // Max 4096
-  - url?: string
-  - color?: number
-  - fields?: Field[] // Max 25
-  - author?: Author
-  - footer?: Footer
-  - image?: Image
-  - thumbnail?: Image
-- Author
-  - name?: string // Max 256
-  - url?: string
-  - icon_url?: string
-- Field
-  - name: string // Max 256
-  - value: string // Max 1024
-  - inline?: boolean
-- Footer
-  - text?: string // Max 2048
-  - icon_url?: string
-  - timestamp?: string // ISO string
-- Image
-  - url: string
-- TTS
-  - content: string
-  - tts: boolean
-- AllowedMentions
-  - parse?: Parse[] // everyone, users o roles
-  - users?: string[]
-  - roles?: string[]
-- Parse (enum): everyone, users o roles
+- **DiscordMessage**
+  - **username**?: string; __*/ Max 80 /*__ ```new```
+  - **avatar_url**?: string; ```new```
+  - **content**?: string __*/ Max 2000 /*__
+  - **embeds**?: Embed[] __*/ Max 10 /*__
+  - **attachments**?: DiscordFile[] __*/ Max 10 /*__ ```updated```
+  - **tts**?: TTS
+  - **allowed_mentions**?: AllowedMentions
+- **Embed**
+  - **title**?: string __*/ Max 256 /*__
+  - **description**?: string __*/ Max 2048 /*__ ```updated```
+  - **url**?: string
+  - **color**?: number
+  - **fields**?: Field[] __*/ Max 25 /*__
+  - **author**?: Author
+  - **footer**?: Footer
+  - **image**?: Image
+  - **thumbnail**?: Image
+- **Author**
+  - **name**?: string __*/ Max 256 /*__
+  - **url**?: string
+  - **icon_url**?: string
+- **Field**
+  - **name**: string __*/ Max 256 /*__
+  - **value**: string __*/ Max 1024 /*__
+  - **inline**?: boolean
+- **Footer**
+  - **text**?: string __*/ Max 2048 /*__
+  - **icon_url**?: string
+  - **timestamp**?: string __*/ ISO string /*__
+- **Image**
+  - **url**: string
+- **TTS**
+  - **content**: string
+  - **tts**: boolean
+- **AllowedMentions**
+  - **parse**?: Parse[] __*/ everyone, users o roles /*__
+  - **users**?: string[]
+  - **roles**?: string[]
+- **WebhookSettings** ```new```
+  - **username**?: string __*/ Max 80 /*__ ```new```
+  - **avatar_url**?: string ```new```
+- **DiscordFile** ```new```
+  - **data**: fs.ReadStream ```new```
+  - **name**: string ```new```
+- **Parse** (*enum*): everyone, users o roles
 
 #### EmbedBuilder
 
 ##### Methods:
 
-- setTitle(title: string = ''): return this
-- setDescription(description: string = ''): return this
-- setUrl(url: string = ''): return this
-- setColor(hexColor: string = ''): return this
-- addField(field: Field): return this
-- setAuthor(author: Author = {}): return this
-- setFooter(footer: Footer = {}): return this
-- setImage(url?: string): return this
-- setThumbnail(url?: string): return this
-- getJson(): return json string
-- build(): return **Embed**
+- **setTitle**(title: string = ''): *return this*
+- **setDescription**(description: string = ''): *return this*
+- **setUrl**(url: string = ''): *return this*
+- **setColor**(hexColor: string = ''): *return this*
+- **addField**(field: Field): *return this*
+- **setAuthor**(author: Author = {}): *return this*
+- **setFooter**(footer: Footer = {}): *return this*
+- **setImage**(url?: string, isAttachmentfile?: boolean): *return this* ```updated```
+- **setThumbnail**(url?: string, isAttachmentfile?: boolean): *return this* ```updated```
+- **getJson**(): return json string
+- **build**(): return **Embed**
 
 ##### Example:
 
@@ -130,15 +138,16 @@ console.log(embed.getJson());
 
 ##### Methods:
 
-- setContent(content: string = ''): return this
-- addAttachment(attachment?: string): return this
-- addEmbed(embed?: Embed): return this
-- setTTS(content?: string): return this
-- setAllowedMentionsParse(parse?: Parse[]): return this
-- setAllowedMentionsUsers(users?: string[]): return this
-- setAllowedMentionsRoles(roles?: string[]): return this
-- getJson(): return json string
-- build(): return **DiscordMessage**
+- **overrideWebhook**(settings: WebhookSettings = {}'): *return this* ```new```
+- **setContent**(content: string = ''): *return this*
+- **addAttachment**(attachment?: DiscordFile): *return this* ```updated```
+- **addEmbed**(embed?: Embed): *return this*
+- **setTTS**(content?: string): *return this*
+- **setAllowedMentionsParse**(parse?: Parse[]): *return this*
+- **setAllowedMentionsUsers**(users?: string[]): *return this*
+- **setAllowedMentionsRoles**(roles?: string[]): *return this*
+- **getJson**(): return json string
+- **build**(): return **DiscordMessage**
 
 ##### Example:
 
@@ -190,13 +199,33 @@ console.log(message.getJson());
 // }
 ```
 
+##### Attachments example:
+
+```js
+const fs = require("fs")
+const path = require("path")
+const { EmbedBuilder, MessageBuilder } = require("@arskang/discord-webhook");
+
+const imageName = "imagen.jpg"
+const image = fs.createReadStream(path.join(__dirname, "DIR"))
+
+const embed = new EmbedBuilder()
+  .setTitle("Title")
+  .setImage(imageName, true) // isAttachmentfile
+  .setThumbnail(imageName, true); // isAttachmentfile
+
+new MessageBuilder()
+  .addAttachment({ name: imageName, data: image })
+  .setContent("Content");
+```
+
 #### HookBuilder
 
 ##### Methods:
 
-- constructor(url: string): return this
-- addMessage(message: DiscordMessage): return this
-- send(): return **axios (array) response promise**
+- **constructor**(url: string): *return this*
+- **addMessage**(message: DiscordMessage): *return this*
+- **send**(): return **axios (array) response promise**
 
 ##### Example:
 
@@ -224,34 +253,38 @@ try {
 
 #### MarkdownBuilder
 
-- bold(text: string): return this
-  - (static) bold(text: string): string
-- italic(text: string): return this
-  - (static) italic(text: string): string
-- underline(text: string): return this
-  - (static) underline(text: string): string
-- strikethrough(text: string): return this
-  - (static) strikethrough(text: string): string
-- bigHeader(text: string): return this
-  - (static) bigHeader(text: string): string
-- smallerHeader(text: string): return this
-  - (static) smallerHeader(text: string): string
-- evenSmallerHeader(text: string)return this
-  - (static) evenSmallerHeader(text: string)
-- links(name: string, url: string)return this
-  - (static) links(name: string, url: string)
-- list(list: MarkdownList = []): return this
-  - (static) list(list: MarkdownList = []): string
-- codeBlocks(text: string, language?return this
-  - (static) codeBlocks(text: string, language?
-- inlineBlockQuote(text: string): return this
-  - (static) inlineBlockQuote(text: string): string
-- blockQuotes(text: string): return this
-  - (static) blockQuotes(text: string): string
-- spoiler(text: string): return this
-  - (static) spoiler(text: string): string
-- lineBreak(): return this
-- getMessage(): return string message
+- **bold**(text: string): **return this**
+  - **(static) bold**(text: string): *string*
+- **italic**(text: string): *return this*
+  - **(static) italic**(text: string): *string*
+- **underline**(text: string): *return this*
+  - **(static) underline**(text: string): *string*
+- **strikethrough**(text: string): *return this*
+  - **(static) strikethrough**(text: string): *string*
+- **bigHeader**(text: string): *return this*
+  - **(static) bigHeader**(text: string): *string*
+- **smallerHeader**(text: string): *return this*
+  - **(static) smallerHeader**(text: string): *string*
+- **evenSmallerHeader**(text: string): *return this*
+  - **(static) evenSmallerHeader**(text: string): *string*
+- **links**(name: string, url: string): *return this*
+  - **(static) links**(name: string, url: string): *string*
+- **list**(list: MarkdownList = []): *return this*
+  - **(static) list**(list: MarkdownList = []): *string*
+- **codeBlocks**(text: string, language?: string) *return this*
+  - **(static) codeBlocks**(text: string, language?: string): *string* 
+- **inlineBlockQuote**(text: string): *return this*
+  - **(static) inlineBlockQuote**(text: string): *string*
+- **blockQuotes**(text: string): *return this*
+  - **(static) blockQuotes**(text: string): *string*
+- **spoiler**(text: string): *return this*
+  - **(static) spoiler**(text: string): *string*
+- **channelTag**(id: string): *return this* ```new```
+  - **(static) channelTag**(id: string): *string* ```new```
+- **uroleTag**(id: string): *return this* ```new```
+  - **(static) uroleTag**(id: string): *string* ```new```
+- **lineBreak**(): *return this*
+- **getMessage**(): return string message
 
 ##### Example:
 

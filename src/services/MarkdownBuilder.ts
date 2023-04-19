@@ -3,7 +3,7 @@ import { rgxURL } from '../helpers/regexp';
 import e from '../helpers/errors';
 import { convertToList } from '../helpers';
 
-export default class MarkdownDiscordBuilder {
+export default class MarkdownBuilder {
   private message: string = '';
 
   getMessage(): string {
@@ -18,7 +18,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   bold(text: string) {
-    this.message += MarkdownDiscordBuilder.bold(text);
+    this.message += MarkdownBuilder.bold(text);
     return this;
   }
 
@@ -27,7 +27,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   italic(text: string) {
-    this.message += MarkdownDiscordBuilder.italic(text);
+    this.message += MarkdownBuilder.italic(text);
     return this;
   }
 
@@ -36,7 +36,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   underline(text: string) {
-    this.message += MarkdownDiscordBuilder.underline(text);
+    this.message += MarkdownBuilder.underline(text);
     return this;
   }
 
@@ -45,7 +45,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   strikethrough(text: string) {
-    this.message += MarkdownDiscordBuilder.strikethrough(text);
+    this.message += MarkdownBuilder.strikethrough(text);
     return this;
   }
 
@@ -54,7 +54,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   bigHeader(text: string) {
-    this.message += MarkdownDiscordBuilder.bigHeader(text);
+    this.message += MarkdownBuilder.bigHeader(text);
     return this;
   }
 
@@ -64,7 +64,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   smallerHeader(text: string) {
-    this.message += MarkdownDiscordBuilder.smallerHeader(text);
+    this.message += MarkdownBuilder.smallerHeader(text);
     return this;
   }
 
@@ -74,7 +74,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   evenSmallerHeader(text: string) {
-    this.message += MarkdownDiscordBuilder.evenSmallerHeader(text);
+    this.message += MarkdownBuilder.evenSmallerHeader(text);
     return this;
   }
 
@@ -84,7 +84,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   links(name: string, url: string) {
-    this.message += MarkdownDiscordBuilder.links(name, url);
+    this.message += MarkdownBuilder.links(name, url);
     return this;
   }
 
@@ -94,7 +94,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   list(list: (string | MdList)[] = []) {
-    this.message += MarkdownDiscordBuilder.list(list);
+    this.message += MarkdownBuilder.list(list);
     return this;
   }
 
@@ -120,7 +120,7 @@ export default class MarkdownDiscordBuilder {
   }
 
   codeBlocks(text: string, language?: string) {
-    this.message += MarkdownDiscordBuilder.codeBlocks(text, language);
+    this.message += MarkdownBuilder.codeBlocks(text, language);
     return this;
   }
 
@@ -133,7 +133,7 @@ ${text}
   }
 
   inlineBlockQuote(text: string) {
-    this.message += MarkdownDiscordBuilder.inlineBlockQuote(text);
+    this.message += MarkdownBuilder.inlineBlockQuote(text);
     return this;
   }
 
@@ -143,7 +143,7 @@ ${text}
   }
 
   blockQuotes(text: string) {
-    this.message += MarkdownDiscordBuilder.blockQuotes(text);
+    this.message += MarkdownBuilder.blockQuotes(text);
     return this;
   }
 
@@ -153,11 +153,29 @@ ${text}
   }
 
   spoiler(text: string) {
-    this.message += MarkdownDiscordBuilder.spoiler(text);
+    this.message += MarkdownBuilder.spoiler(text);
     return this;
   }
 
   static spoiler(text: string): string {
     return `||${text}||`;
+  }
+
+  channelTag(id: string) {
+    this.message += MarkdownBuilder.channelTag(id);
+    return this;
+  }
+
+  static channelTag(id: string): string {
+    return `<#${id}>`;
+  }
+
+  uroleTag(id: string) {
+    this.message += MarkdownBuilder.uroleTag(id);
+    return this;
+  }
+
+  static uroleTag(id: string): string {
+    return `<@${id}>`;
   }
 }

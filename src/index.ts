@@ -3,8 +3,8 @@ import MessageBuilder from './services/MessageBuilder';
 import EmbedBuilder from './services/EmbedBuilder';
 import MarkdownBuilder from './services/MarkdownBuilder';
 import {
-  DiscordMessage, Embed, Author, Field, Footer,
-  Image, TTS, Parse, AllowedMentions,
+  DiscordMessage, Embed, Author, Field, Footer, Image,
+  TTS, Parse, AllowedMentions, WebhookSettings, DiscordFile,
 } from './types';
 
 export {
@@ -22,6 +22,8 @@ export {
   Image,
   TTS,
   AllowedMentions,
+  WebhookSettings,
+  DiscordFile,
   // Enums
   Parse,
 };

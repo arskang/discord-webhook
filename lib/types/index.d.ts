@@ -1,9 +1,21 @@
+/// <reference types="node" />
+import * as fs from 'fs';
 export interface DiscordMessage {
+    username?: string;
+    avatar_url?: string;
     content?: string;
     embeds?: Embed[];
-    attachments?: string[];
+    attachments?: DiscordFile[];
     tts?: TTS;
     allowed_mentions?: AllowedMentions;
+}
+export interface DiscordFile {
+    data: fs.ReadStream;
+    name: string;
+}
+export interface WebhookSettings {
+    username?: string;
+    avatar_url?: string;
 }
 export interface Embed {
     title?: string;

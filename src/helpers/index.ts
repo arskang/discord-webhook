@@ -1,4 +1,5 @@
-import { MdList } from '../types';
+import * as FormData from 'form-data';
+import { DiscordMessage, MdList } from '../types';
 import { rgxHexColor } from './regexp';
 import e from './errors';
 
@@ -12,4 +13,18 @@ export function convertToList(item: string | MdList): MdList {
     return item as MdList;
   }
   return { name: item };
+}
+
+export function getFormData(data: DiscordMessage): FormData {
+  const form = new FormData();
+  const { attachments, ...rest } = data;
+  if (attachments && attachments.length > 0) {
+    attachments.forEach((d, i) => {
+      form.append(`file${i + 1}`, d.data, {
+        filename: d.name,
+      });
+    });
+  }
+  form.append('payload_json', JSON.stringify(rest));
+  return form;
 }

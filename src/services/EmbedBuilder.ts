@@ -8,6 +8,17 @@ import e from '../helpers/errors';
 export default class EmbedBuilder {
   private embed: Embed = {};
 
+  private isAllCharactersValid(): void {
+    let characters = (this.embed.title || '')
+      + (this.embed.description || '')
+      + (this.embed?.author?.name || '')
+      + (this.embed?.footer?.text || '');
+    if (this.embed.fields && this.embed.fields.length > 0) {
+      characters += this.embed.fields.reduce<string>((acc, { name }) => acc + name, '');
+    }
+    if (characters.length > 6000) throw new Error(`sum of all characters in embed ${e.limit6000}`);
+  }
+
   setTitle(title: string = '') {
     if (title.length > 256) throw new Error(`title ${e.limit256}`);
     this.embed.title = title;
@@ -15,7 +26,7 @@ export default class EmbedBuilder {
   }
 
   setDescription(description: string = '') {
-    if (description.length > 4096) throw new Error(`description ${e.limit4096}`);
+    if (description.length > 2048) throw new Error(`description ${e.limit2048}`);
     this.embed.description = description;
     return this;
   }
@@ -69,25 +80,31 @@ export default class EmbedBuilder {
     return this;
   }
 
-  setImage(url?: string) {
+  setImage(url?: string, isAttachmentfile?: boolean) {
     if (!url) return this;
-    if (url && !rgxURL.test(url)) throw new Error(`url ${e.urlError}`);
-    this.embed.image = { url };
+    if (!isAttachmentfile && url && !rgxURL.test(url)) throw new Error(`url ${e.urlError}`);
+    this.embed.image = {
+      url: isAttachmentfile ? `attachment://${url}` : url,
+    };
     return this;
   }
 
-  setThumbnail(url?: string) {
+  setThumbnail(url?: string, isAttachmentfile?: boolean) {
     if (!url) return this;
     if (url && !rgxURL.test(url)) throw new Error(`url ${e.urlError}`);
-    this.embed.thumbnail = { url };
+    this.embed.thumbnail = {
+      url: isAttachmentfile ? `attachment://${url}` : url,
+    };
     return this;
   }
 
   getJson(): string {
+    this.isAllCharactersValid();
     return JSON.stringify(this.embed);
   }
 
   build(): Embed {
+    this.isAllCharactersValid();
     return this.embed;
   }
 }
