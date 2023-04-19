@@ -3,7 +3,7 @@
 Library to use Discord webhooks
 
 #### Structure
-- **[**Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
+- [Discord Webhooks Guide](https://birdie0.github.io/discord-webhooks-guide/discord_webhook.html)
 
 #### Install
 ```bash
